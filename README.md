@@ -21,8 +21,8 @@ You are given a portfolio made up of **N** instruments, each instrument having t
 For the first visualization, your friend would like you to build a pie chart to help visualize the amount invested in
 each instrument.
 
-Your task is to calculate `N + 1` angles (in `radians`) representing the boundaries of the slices of the pie chart, where each
-slice represents the relative investment allocation for an instrument. The slices should be arranged in descending order
+Your task is to calculate `N + 1` angles (in `radians`) representing the boundaries of the slices/arcs of the pie chart, where each
+slice/arc represents the relative investment allocation for an instrument. The slices/arcs should be arranged in descending order
 of their sizes (instrument's proportion) in clockwise direction.
 You should return a list containing `N + 1` angles where `1 <= N <= 2000`.
 
@@ -35,7 +35,7 @@ assigned the corresponding minimum value in radians and the angles of other slic
 Portfolio A is made up of 3 instruments S1, S2 and S3 with the following proportions 40%, 30% and 30% respectively. 
 Now if we draw a pie chart sorted by the invested value of securities we get:
 
-![Part1-visualization.png](src/main/resources/static/Part1-visualization.png)
+![Part1-visualization.png](./Part1-visualization.png)
 
 Then the program should return the following list:
 
@@ -109,7 +109,7 @@ relative amount invested in each instrument but also the risk exposures under ea
 Your task again is to calculate angles (in radians).
 
 #### Split Chord Diagram (only for reference)
-![Part2-visualization.png](src/main/resources/static/Part2-visualization.png)
+![Part2-visualization.png](./Part2-visualization.png)
 
 For the above diagram, only consider the outer skeleton (ignoring the connectors/ribbons). On the left-hand side,
 arks are ordered by size (ascending, clockwise) and each ark represents an instrument in the portfolio with the size of arc proportional to
@@ -117,17 +117,17 @@ the value invested in the instrument.
 
 On the right, we have four main arcs of same size representing the value invested in each category. Each main ark is
 then further divided into smaller arcs *(ordered by size, clockwise descending)* representing the proportion invested in each type under a given category
-(if category is `currency`, then `type` would be `USD, HKD, JPY, etc.`). 
+(if category is `currency`, then `type` would be `USD`, `HKD`, `JPY`, etc.). 
 
- - Assume that on the right the arks are in the following order (clockwise): `currency, sector, assetClass, region`.
+ - On the right the arks should be in the following order (clockwise): `currency`, `sector`, `assetClass`, `region`.
  - Space between main arks on the right is `0.00314159 radians`
  - Tops of the left and right side should be symmetric and `PI / 3 radians` apart.
  - Bottoms of the left and right side should be symmetric and `PI / 3 radians` apart.
 
 As before you have to calculate `N + 1` angles representing relative investment allocations for each instrument in the
-portfolio. In addition to that, given `c, s, a, r` different types of currencies, sectors, asset classes and regions,
-you also need to calculate `c + 1, s + 1, a + 1, r + 1` angles making up the four main arcs representing each risk category.
-Where `1 <= N <= 500, 1 <= c <= 8, 1 <= s <= 9, 1 <= a <= 6, 1 <= r <= 5`
+portfolio. In addition to that, given `c`, `s`, `a`, `r` integers representing different types of currencies, sectors, asset classes and regions respectively,
+you also need to calculate `c + 1`, `s + 1`, `a + 1`, `r + 1` angles making up the four main arcs representing each risk category.
+Where `1 <= N <= 500`, `1 <= c <= 8`, `1 <= s <= 9`, `1 <= a <= 6`, `1 <= r <= 5`.
 
 
 Again, since it will be hard to visualize investments with very small proportions, please consider the following constraint
