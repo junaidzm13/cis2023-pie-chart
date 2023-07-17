@@ -1,6 +1,8 @@
 package com.csg.codeit.controller
 
 import com.csg.codeit.model.EvaluationResultRequest
+import com.csg.codeit.model.Input
+import com.csg.codeit.model.OutputPart1
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
@@ -19,4 +21,17 @@ class SimpleCoordinatorController {
         ResponseEntity<Void>(HttpStatus.ACCEPTED).also {
             with(evaluationResultRequest) { logger.info("Score for $runId = $score; Message:\n$message") }
         }
+
+    @PostMapping(value = ["/mock-user"], consumes = [MediaType.APPLICATION_JSON_VALUE])
+    fun evaluate(@RequestBody input: Input): ResponseEntity<OutputPart1> {
+        logger.info("Recieved: $input")
+        return ResponseEntity.ok(
+            OutputPart1(
+                listOf(
+                    3.769911,
+                    5.026548
+                )
+            )
+        )
+    }
 }

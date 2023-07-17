@@ -1,60 +1,37 @@
 package com.csg.codeit.service
 
-import com.csg.codeit.config.AppConfig
-import com.csg.codeit.config.objectMapper
+import com.csg.codeit.model.ChallengeResult
 import com.csg.codeit.model.EvaluationRequest
 import com.csg.codeit.model.EvaluationResultRequest
-import com.csg.codeit.model.TestEvaluatorService
-import com.csg.codeit.model.TestResponse
-import okhttp3.mockwebserver.Dispatcher
-import okhttp3.mockwebserver.MockResponse
-import okhttp3.mockwebserver.MockWebServer
-import okhttp3.mockwebserver.RecordedRequest
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import org.junit.jupiter.api.Test
 
 internal class CoordinatorServiceTest {
 
-    private val appConfig = AppConfig(endpointSuffix = "test", coordinatorAuthToken = "COORDINATOR_AUTH_TOKEN")
+    private val evaluatorService = mockk<EvaluatorService>()
+    private val webClient = mockk<WebClient>(relaxed = true)
+    private val coordinatorService = CoordinatorService(evaluatorService, webClient)
 
-    private lateinit var mockWebServer: MockWebServer
-
-    private lateinit var coordinatorService: CoordinatorService
-
-    @BeforeEach
-    fun setUp() {
-        mockWebServer = MockWebServer().also { it.start() }
-        coordinatorService = CoordinatorService(appConfig, appConfig.httpClient(), TestEvaluatorService)
-    }
-
-    @AfterEach
-    fun tearDown() {
-        mockWebServer.shutdown()
+    companion object {
+        private const val CALLBACK_URL = "call-back-url.com"
+        private const val TEAM_URL = "team-url.com"
+        private const val RUN_ID = "run-id"
+        private const val MESSAGE = "mock result message"
+        private const val SCORE = 100
     }
 
     @Test
-    fun `can evaluate team`() {
-        mockWebServer.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest): MockResponse = when (request.path) {
-                "/${appConfig.endpointSuffix}" -> MockResponse()
-                    .setResponseCode(200)
-                    .setBody(objectMapper.writeValueAsString(TestResponse(50)))
-                "/evaluate" -> MockResponse().setResponseCode(204).also {
-                    assertThat(
-                        objectMapper.readValue(request.body.readUtf8(), EvaluationResultRequest::class.java)
-                    ).isEqualTo(EvaluationResultRequest("runId", 50, ""))
-                }
-                else -> MockResponse().setResponseCode(500)
-            }
-        }
-        coordinatorService(
-            EvaluationRequest(
-                runId = "runId",
-                teamUrl = mockWebServer.url("").toString(),
-                callbackUrl = mockWebServer.url("evaluate").toString()
-            )
-        )
+    fun `can call evaluateResult and post the result to the passed callBackUrl`() {
+        every { evaluatorService.evaluateResult(TEAM_URL) }.returns(ChallengeResult(SCORE, MESSAGE))
+
+        coordinatorService(EvaluationRequest(RUN_ID, TEAM_URL, CALLBACK_URL))
+
+        verify(exactly = 1) { webClient.postEvalResult(
+            EvaluationResultRequest(RUN_ID, SCORE, MESSAGE),
+            CALLBACK_URL
+        ) }
     }
+
 }
