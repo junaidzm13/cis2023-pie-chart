@@ -87,10 +87,76 @@ Then the program should return the following list:
 ```json
 {
   "instruments": [
-    0,
+    0.0,
     3.76991118,
     5.02654825,
     6.28318531   
+  ]
+}
+```
+
+#### Example 2
+
+**Input**
+
+```json
+{
+  "instruments": [
+    {
+      "quantity": 110,
+      "price": 10.0,
+      "currency": "SGD",
+      "sector": "ECommerce",
+      "assetClass": "Equity",
+      "region": "APAC"
+    },
+    {
+      "quantity": 5,
+      "price": 1.0,
+      "currency": "USD",
+      "sector": "Technology",
+      "assetClass": "Equity",
+      "region": "NORTH_AMERICA"
+    },
+    {
+      "quantity": 39,
+      "price": 5.0,
+      "currency": "GBP",
+      "sector": "Education",
+      "assetClass": "Equity",
+      "region": "EMEA"
+    },
+    {
+      "quantity": 32,
+      "price": 100.0,
+      "currency": "Other",
+      "sector": "Pharmaceutical",
+      "assetClass": "Equity",
+      "region": "APAC"
+    },
+    {
+      "quantity": 200,
+      "price": 30.0,
+      "currency": "HKD",
+      "sector": "Technology",
+      "assetClass": "FixedIncome",
+      "region": "APAC"
+    }
+  ],
+  "part": "FIRST" 
+}
+```
+
+**Output**
+```json
+{
+  "instruments": [
+    0.0,
+    3.59030608,
+    5.50513599,
+    6.16335877,
+    6.28004372,
+    6.28318531
   ]
 }
 ```
@@ -203,71 +269,96 @@ minimum value in radians and the angles of other arcs must be adjusted proportio
   ]
 }
 ```
-------
 
-# Everything below is to be deleted
+#### Example 2
 
-As such, the `ChallengeRequest` implementation should be something ready for Jackson to convert,
-bearing in mind to use `@get:JsonIgnore` on any attributes you do not want to expose.
+**Input**
 
-## Local testing
-
-For testing, write your own solver controller
-(remember to run `App` with the environment variable `ENDPOINT_SUFFIX` defined).
-
-Make sure your solver controller handles `POST` requests at the same path as `ENDPOINT_SUFFIX`.
-
-Then, in your browser, go to `http://localhost:8080` (default port), open the console and run the following `fetch`
-command:
-
-````javascript
-fetch('http://localhost:8080/evaluate', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ "runId": "test", "teamUrl": "http://localhost:8080/", "callbackUrl": "http://localhost:8080/coordinator" }),
-})
-.then(response => response.text())
-.then(data => { console.log('Success!', data); })
-.catch((error) => { console.error('Error:', error); });
-````
-
-## Example controller
-
-It is strongly recommended to have a controller that serves an example of the challenge request/response.
-
-By default, the endpoint `/example` is exempted from authentication requirements in production, so feel free to use
-that.
-
-The `GET` response for this can be something like:
-
-````json
+```json
 {
-  "request": {
-    "challenge": "request"
-  },
-  "response": {
-    "challenge": [
-      "response",
-      "as",
-      "desired"
-    ]
-  }
+  "instruments": [
+    {
+      "quantity": 110,
+      "price": 10.0,
+      "currency": "SGD",
+      "sector": "ECommerce",
+      "assetClass": "Equity",
+      "region": "APAC"
+    },
+    {
+      "quantity": 5,
+      "price": 1.0,
+      "currency": "USD",
+      "sector": "Technology",
+      "assetClass": "Equity",
+      "region": "NORTH_AMERICA"
+    },
+    {
+      "quantity": 39,
+      "price": 5.0,
+      "currency": "GBP",
+      "sector": "Education",
+      "assetClass": "Equity",
+      "region": "EMEA"
+    },
+    {
+      "quantity": 32,
+      "price": 100.0,
+      "currency": "Other",
+      "sector": "Pharmaceutical",
+      "assetClass": "Equity",
+      "region": "APAC"
+    },
+    {
+      "quantity": 200,
+      "price": 30.0,
+      "currency": "HKD",
+      "sector": "Technology",
+      "assetClass": "FixedIncome",
+      "region": "APAC"
+    }
+  ],
+  "part": "SECOND" 
 }
-````
+```
 
-## Gitlab CI/Heroku
-
-This template has Gitlab CI set up for easy deployments to Heroku via [`dpl`](https://github.com/travis-ci/dpl). By
-default, only `master` branch will be deployed.
-
-You will need to add the following CI/CD variables under Settings:
-
-- `HEROKU_APP_NAME`
-- `HEROKU_API_KEY` (Remember to set this variable as masked so that it will not be printed in build logs)
-
-To perform deployments for branches, do not set the variables as protected so that the pipeline is able to access the
-variables.
-
-If you wish to have multiple environments, you can add in CI/CD variables with environment scope, and add a new job
-in `.gitlab-ci.yml` extending `.deploy_template` for the new environment(s). A sample set-up can be found in
-branch `gitlab-ci-demo`.
+**Output**
+```json
+{
+  "instruments": [
+    3.66519143,
+    3.66833302,
+    3.70718909,
+    3.92637717,
+    4.56401521,
+    5.75958653
+  ],
+  "currency": [
+    0.52359878,
+    0.81979753,
+    0.97777020,
+    1.03207331,
+    1.04169977,
+    1.04484136
+  ],
+  "sector": [
+    1.04798295,
+    1.34608406,
+    1.50493894,
+    1.55954531,
+    1.56922553
+  ],
+  "assetClass": [
+    1.57236712,
+    1.87022002,
+    2.09360970
+  ],
+  "region": [
+    2.09675130,
+    2.60522583,
+    2.61485229,
+    2.61799388
+  ]
+}
+```
+------
