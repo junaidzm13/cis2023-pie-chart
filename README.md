@@ -14,7 +14,7 @@ You are given a portfolio made up of **N** instruments, each instrument having t
   - assetClass
   - region
 
----
+<hr style="height:0.25em; background-color:#e1e4e8">
 
 ### First visualization
 
@@ -26,8 +26,8 @@ slice/arc represents the relative investment allocation for an instrument. The s
 of their sizes (instrument's proportion) in clockwise direction.
 You should return a list containing `N + 1` angles where `1 <= N <= 2000`.
 
-For example, if Portfolio A is made up of 3 instruments S1, S2 and S3 with the following proportions 20%, 20% and 60% respectively. 
-Now, if we draw a pie chart sorted by the invested value of instruments we get:
+For example, if Portfolio A is made up of 3 instruments S1, S2 and S3 with the following proportions 20%, 20% and 60% respectively,
+then if we draw a pie chart sorted by the invested value of instruments we should get:
 
 ![Part1-visualization.png](./Part1-visualization.png)
 
@@ -41,12 +41,16 @@ Then the program should return the following list:
     6.28318531  // end of pie chart
 ]
 ```
+<hr style="height:0.0625em; background-color:#e1e4e8">
 
+#### Constraint
 Since, it will be hard to visualize investments with very small proportions, your friend adds the following constraint:
 *if any instrument's invested proportion makes up less than **0.05%** (or 0.00314159 radians), its slice/arc must be
 assigned the corresponding minimum value in radians and the angles of other slices/arcs must be adjusted proportionally.*
 
-##### Example 1
+<hr style="height:0.0625em; background-color:#e1e4e8">
+
+#### Example 1
 
 **Input**
 ```json
@@ -159,7 +163,7 @@ assigned the corresponding minimum value in radians and the angles of other slic
 }
 ```
 
----
+<hr style="height:0.25em; background-color:#e1e4e8">
 
 ### Second visualization
 
@@ -193,10 +197,14 @@ portfolio. In addition to that, given `c`, `s`, `a`, `r` integers representing d
 you also need to calculate `c + 1`, `s + 1`, `a + 1`, `r + 1` angles making up the four main arcs representing each risk category.
 Where `1 <= N <= 500`, `1 <= c <= 8`, `1 <= s <= 9`, `1 <= a <= 6`, `1 <= r <= 5`.
 
+<hr style="height:0.0625em; background-color:#e1e4e8">
 
+#### Constraint
 Again, since it will be hard to visualize investments with very small proportions, please consider the following constraint
 in your calculations: if an arc has an angle smaller than **0.00314159**, it must be re-assigned the corresponding 
 minimum value in radians and the angles of other arcs must be adjusted proportionally.
+
+<hr style="height:0.0625em; background-color:#e1e4e8">
 
 #### Example 1
 
@@ -359,4 +367,4 @@ minimum value in radians and the angles of other arcs must be adjusted proportio
   ]
 }
 ```
-------
+<hr style="height:0.25em; background-color:#e1e4e8">
