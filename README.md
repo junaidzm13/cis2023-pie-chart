@@ -8,7 +8,7 @@ portfolio's proportions and associated risks. Since, he is a really close friend
 
 You are given a portfolio made up of **N** instruments, each instrument having the following attributes:
   - quantity
-  - price
+  - price *(in USD)*
   - currency
   - sector
   - assetClass
@@ -26,14 +26,8 @@ slice/arc represents the relative investment allocation for an instrument. The s
 of their sizes (instrument's proportion) in clockwise direction.
 You should return a list containing `N + 1` angles where `1 <= N <= 2000`.
 
-Since, it will be hard to visualize investments with very small proportions, your friend adds the following constraint:
-*if any instrument's invested proportion makes up less than **0.05%** (or 0.00314159 radians), its slice/arc must be
-assigned the corresponding minimum value in radians and the angles of other slices/arcs must be adjusted proportionally.*
-
-##### Example
-
-Portfolio A is made up of 3 instruments S1, S2 and S3 with the following proportions 40%, 30% and 30% respectively. 
-Now if we draw a pie chart sorted by the invested value of securities we get:
+For example, if Portfolio A is made up of 3 instruments S1, S2 and S3 with the following proportions 20%, 20% and 60% respectively. 
+Now, if we draw a pie chart sorted by the invested value of instruments we get:
 
 ![Part1-visualization.png](./Part1-visualization.png)
 
@@ -41,12 +35,16 @@ Then the program should return the following list:
 
 ```
 [
-    0, // start of pie chart
-    2.5132, // boundary of slices of S1, S2
-    4.3982, // boundary of slices of S2, S3
-    6.2832 // end of pie chart
+    0.0, // start of pie chart
+    3.76991118, // boundary of slices of S3, S2
+    5.02654825, // boundary of slices of S2, S1
+    6.28318531  // end of pie chart
 ]
 ```
+
+Since, it will be hard to visualize investments with very small proportions, your friend adds the following constraint:
+*if any instrument's invested proportion makes up less than **0.05%** (or 0.00314159 radians), its slice/arc must be
+assigned the corresponding minimum value in radians and the angles of other slices/arcs must be adjusted proportionally.*
 
 ##### Example 1
 
