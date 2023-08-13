@@ -368,3 +368,7 @@ minimum value in radians and the angles of other arcs must be adjusted proportio
 }
 ```
 <hr style="height:0.25em; background-color:#e1e4e8">
+
+### Input requirement
+
+Your application must expose <b>/pie-chart</b> endpoint which will accept POST requests in the same format as specified in the examples.
