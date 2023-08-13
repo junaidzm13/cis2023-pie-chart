@@ -1,2 +1,2 @@
-rootProject.name = "kotlin-template"
+rootProject.name = "pie-chart"
 
