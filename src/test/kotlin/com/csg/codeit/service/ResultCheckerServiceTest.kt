@@ -50,6 +50,6 @@ internal class ResultCheckerServiceTest {
         )
 
         assertThat(result.score).isEqualTo(143)
-        assertThat(result.message).contains("Correct")
+        assertThat(result.message).contains("FIRST part: test case correct")
     }
 }

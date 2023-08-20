@@ -25,12 +25,13 @@ class ResultCheckerService {
         }
 
         return if (outsideOfThreshold.isEmpty()) {
-            ChallengeResult(testCase.score, "Correct!")
+
+            ChallengeResult(testCase.score, "${testCase.input.part} part: test case correct!")
         } else {
             outsideOfThreshold.forEach {
                 logger.error("[INCORRECT VALUES]. Expected: $expected. Actual: $actual")
             }
-            ChallengeResult(0, "Incorrect angle values")
+            ChallengeResult(0, "${testCase.input.part} part: Incorrect angle values")
         }
     }
 
