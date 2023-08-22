@@ -2,10 +2,11 @@ import com.csg.codeit.data.testCasesForPart2
 import com.csg.codeit.model.Instrument
 import com.csg.codeit.model.OutputPart2
 import com.csg.codeit.solution.AngleCalculator
+import com.csg.codeit.solution.Solver
 
-class ChordDiagram {
+class ChordDiagram: Solver {
 
-    fun calculateCoordinates(securities: List<Instrument>): OutputPart2 {
+    override fun calculateCoordinates(securities: List<Instrument>): OutputPart2 {
         val values = securities.map { it.price * it.quantity }
         val gap = Math.PI * 0.001
         val eachSideAngle = (2 * Math.PI / 3)

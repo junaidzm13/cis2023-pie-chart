@@ -2,10 +2,11 @@ import com.csg.codeit.data.testCases
 import com.csg.codeit.model.Instrument
 import com.csg.codeit.model.OutputPart1
 import com.csg.codeit.solution.AngleCalculator
+import com.csg.codeit.solution.Solver
 
 
-class PieChart {
-    fun calculateCoordinates(securities: List<Instrument>): OutputPart1 {
+class PieChart: Solver {
+    override fun calculateCoordinates(securities: List<Instrument>): OutputPart1 {
         val sortedValues = securities.map { it.price * it.quantity }.sorted()
         val angles = AngleCalculator().toRadians(sortedValues).sortedDescending()
 

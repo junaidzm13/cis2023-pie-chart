@@ -1,6 +1,13 @@
 package com.csg.codeit.data
 
+import ChordDiagram
+import PieChart
 import com.csg.codeit.model.*
+import com.csg.codeit.solution.Solver
+import kotlin.random.Random
+
+const val PART1_MAX_SCORE = 4
+const val PART2_MAX_SCORE = 6
 
 
 val testCasesForPart1 = listOf(
@@ -40,7 +47,7 @@ val testCasesForPart1 = listOf(
             Math.PI * 2 * 4 / 5,
             2 * Math.PI
         )),
-        4
+        PART1_MAX_SCORE
     ),
     TestCase(
         Input(
@@ -96,7 +103,7 @@ val testCasesForPart1 = listOf(
             6.28004372,
             2 * Math.PI
         )),
-        4
+        PART1_MAX_SCORE
     ),
     TestCase( // multiple first step re-balancing
         Input(
@@ -179,7 +186,7 @@ val testCasesForPart1 = listOf(
             6.28004372,
             6.28318531
         )),
-        4
+        PART1_MAX_SCORE
     ),
     TestCase( // 2 step re-balancing
         Input(
@@ -325,9 +332,10 @@ val testCasesForPart1 = listOf(
             6.28004372,
             6.28318531
         )),
-        4
+        PART1_MAX_SCORE
     ),
-)
+) + randomTestCasesPart1(6)
+
 
 val testCasesForPart2 = listOf(
     TestCase(
@@ -391,7 +399,7 @@ val testCasesForPart2 = listOf(
                 2.61799388
             )
         ),
-        6
+        PART2_MAX_SCORE
     ),
     TestCase(
         Input(
@@ -475,11 +483,39 @@ val testCasesForPart2 = listOf(
                 2.61799388
             )
         ),
-        6
+        PART2_MAX_SCORE
     )
-)
+) + randomTestCasesPart2(8)
 
 val testCases: List<TestCase> = listOf(
     testCasesForPart1,
     testCasesForPart2
 ).flatten()
+
+private fun createRandomTestCase(solver: Solver, part: Part): TestCase {
+    val instrumentsNo = Random.nextInt(100)
+    val instruments = (0 until instrumentsNo).map {
+        Instrument(
+            quantity = Random.nextInt(20),
+            price = Random.nextDouble(10.0,10000.0),
+            currency = Currency.values().toList().shuffled().first(),
+            sector = Sector.values().toList().shuffled().first(),
+            assetClass = AssetClass.values().toList().shuffled().first(),
+            region = Region.values().toList().shuffled().first()
+        )
+    }
+    val output = solver.calculateCoordinates(instruments)
+    return TestCase(Input(instruments, part), output, 4)
+}
+
+private fun randomTestCasesPart1(numberOfCases: Int): List<TestCase> {
+    return (0 until numberOfCases).map {
+        createRandomTestCase(PieChart(), Part.FIRST)
+    }
+}
+
+private fun randomTestCasesPart2(numberOfCases: Int): List<TestCase> {
+    return (0 until numberOfCases).map {
+        createRandomTestCase(ChordDiagram(), Part.SECOND)
+    }
+}
