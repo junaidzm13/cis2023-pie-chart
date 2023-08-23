@@ -493,7 +493,7 @@ val testCases: List<TestCase> = listOf(
 ).flatten()
 
 private fun createRandomTestCase(solver: Solver, part: Part): TestCase {
-    val instrumentsNo = Random.nextInt(100)
+    val instrumentsNo = Random.nextInt(10,100)
     val instruments = (0 until instrumentsNo).map {
         Instrument(
             quantity = Random.nextInt(20),
