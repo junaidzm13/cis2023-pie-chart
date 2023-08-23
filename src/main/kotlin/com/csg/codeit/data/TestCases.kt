@@ -497,7 +497,7 @@ private fun createRandomTestCase(solver: Solver, part: Part): TestCase {
     val instruments = (0 until instrumentsNo).map {
         Instrument(
             quantity = Random.nextInt(20),
-            price = Random.nextDouble(10.0,10000.0),
+            price = Random.nextDouble(1.0,100000.0),
             currency = Currency.values().toList().shuffled().first(),
             sector = Sector.values().toList().shuffled().first(),
             assetClass = AssetClass.values().toList().shuffled().first(),

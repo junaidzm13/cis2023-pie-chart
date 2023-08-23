@@ -5,6 +5,8 @@
 Your application must expose <b>/pie-chart</b> endpoint which will accept POST requests in the same format as specified
 in the examples below.
 
+Input will be provided with MIME type of <b>application.json</b>. Output must be given with the same MIME type.
+
 ### Description
 
 Over the past few months, your friend, Joe, has bought several financial instruments. As his investments grew so 
