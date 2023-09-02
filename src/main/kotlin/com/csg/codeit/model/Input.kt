@@ -5,9 +5,9 @@ data class Input(
     val part: Part
 )
 
-enum class Part {
-    FIRST,
-    SECOND
+enum class Part(val score: Int) {
+    FIRST(4),
+    SECOND(6);
 }
 
 data class Instrument(

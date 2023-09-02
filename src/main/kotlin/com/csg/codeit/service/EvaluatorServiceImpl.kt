@@ -2,7 +2,6 @@ package com.csg.codeit.service
 
 import com.csg.codeit.config.objectMapper
 import com.csg.codeit.data.TestCasesProvider
-import com.csg.codeit.data.testCases
 import com.csg.codeit.model.*
 import com.fasterxml.jackson.module.kotlin.readValue
 import org.slf4j.Logger

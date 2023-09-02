@@ -2,7 +2,7 @@ package com.csg.codeit.service
 
 import com.csg.codeit.config.AppConfig
 import com.csg.codeit.config.objectMapper
-import com.csg.codeit.data.testCases
+import com.csg.codeit.data.hardCodedTestCasesPart1
 import com.csg.codeit.model.EvaluationResultRequest
 import io.mockk.every
 import io.mockk.mockk
@@ -30,7 +30,7 @@ internal class WebClientTest {
 
     @Test
     fun `fetchChallengeResponse can send expected request and return response body`() {
-        val testCase = testCases[0]
+        val testCase = hardCodedTestCasesPart1[0]
         val responseBody = objectMapper.writeValueAsString(testCase.output)
         val mockResponse = MockResponse().setResponseCode(200).setBody(responseBody)
         mockWebServer.enqueue(mockResponse)

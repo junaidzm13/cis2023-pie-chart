@@ -1,7 +1,7 @@
 package com.csg.codeit.controller
 
-import com.csg.codeit.data.testCasesForPart1
-import com.csg.codeit.data.testCasesForPart2
+import com.csg.codeit.data.hardCodedTestCasesPart1
+import com.csg.codeit.data.hardCodedTestCasesPart2
 import com.csg.codeit.model.*
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -13,8 +13,8 @@ class ExampleController {
     @GetMapping("/example")
     fun getChallengeReqAndResExample() = ResponseEntity.ok(
         mapOf(
-            "${Part.FIRST} part" to RequestAndResponse(testCasesForPart1[0].input, testCasesForPart1[0].output),
-            "${Part.SECOND} part" to RequestAndResponse(testCasesForPart2[0].input, testCasesForPart2[0].output)
+            "${Part.FIRST} part" to RequestAndResponse(hardCodedTestCasesPart1[0].input, hardCodedTestCasesPart1[0].output),
+            "${Part.SECOND} part" to RequestAndResponse(hardCodedTestCasesPart2[0].input, hardCodedTestCasesPart2[0].output)
         )
     )
 

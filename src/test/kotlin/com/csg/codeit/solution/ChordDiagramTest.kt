@@ -1,14 +1,12 @@
 package com.csg.codeit.solution
 
 import ChordDiagram
-import com.csg.codeit.data.testCasesForPart2
+import com.csg.codeit.data.hardCodedTestCasesPart2
 import com.csg.codeit.model.TestCase
 import com.csg.codeit.service.ResultCheckerService
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import org.junit.jupiter.params.provider.ValueSource
-import java.util.stream.Stream
 import kotlin.test.assertEquals
 
 class ChordDiagramTest {
@@ -27,7 +25,7 @@ class ChordDiagramTest {
 
     companion object {
         @JvmStatic
-        private fun testCases() = testCasesForPart2.map { Arguments.of(it) }.stream()
+        private fun testCases() = hardCodedTestCasesPart2.map { Arguments.of(it) }.stream()
     }
 
 }

@@ -1,4 +1,3 @@
-import com.csg.codeit.data.testCases
 import com.csg.codeit.model.Instrument
 import com.csg.codeit.model.OutputPart1
 import com.csg.codeit.solution.AngleCalculator

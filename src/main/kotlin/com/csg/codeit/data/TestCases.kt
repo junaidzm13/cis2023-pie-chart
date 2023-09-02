@@ -3,14 +3,10 @@ package com.csg.codeit.data
 import ChordDiagram
 import PieChart
 import com.csg.codeit.model.*
-import com.csg.codeit.solution.Solver
+import kotlin.math.ceil
 import kotlin.random.Random
 
-const val PART1_MAX_SCORE = 4
-const val PART2_MAX_SCORE = 6
-
-
-val testCasesForPart1 = listOf(
+val hardCodedTestCasesPart1 = listOf(
     TestCase(
         Input(
             listOf(
@@ -47,7 +43,7 @@ val testCasesForPart1 = listOf(
             Math.PI * 2 * 4 / 5,
             2 * Math.PI
         )),
-        PART1_MAX_SCORE
+        Part.FIRST.score
     ),
     TestCase(
         Input(
@@ -103,7 +99,7 @@ val testCasesForPart1 = listOf(
             6.28004372,
             2 * Math.PI
         )),
-        PART1_MAX_SCORE
+        Part.FIRST.score
     ),
     TestCase( // multiple first step re-balancing
         Input(
@@ -186,7 +182,7 @@ val testCasesForPart1 = listOf(
             6.28004372,
             6.28318531
         )),
-        PART1_MAX_SCORE
+        Part.FIRST.score
     ),
     TestCase( // 2 step re-balancing
         Input(
@@ -332,12 +328,12 @@ val testCasesForPart1 = listOf(
             6.28004372,
             6.28318531
         )),
-        PART1_MAX_SCORE
+        Part.FIRST.score
     ),
-) + randomTestCasesPart1(6)
+)
 
 
-val testCasesForPart2 = listOf(
+val hardCodedTestCasesPart2 = listOf(
     TestCase(
         Input(
             listOf(
@@ -399,7 +395,7 @@ val testCasesForPart2 = listOf(
                 2.61799388
             )
         ),
-        PART2_MAX_SCORE
+        Part.SECOND.score
     ),
     TestCase(
         Input(
@@ -483,20 +479,14 @@ val testCasesForPart2 = listOf(
                 2.61799388
             )
         ),
-        PART2_MAX_SCORE
+        Part.SECOND.score
     )
-) + randomTestCasesPart2(8)
+)
 
-val testCases: List<TestCase> = listOf(
-    testCasesForPart1,
-    testCasesForPart2
-).flatten()
-
-private fun createRandomTestCase(solver: Solver, part: Part): TestCase {
-    val instrumentsNo = Random.nextInt(10,100)
-    val instruments = (0 until instrumentsNo).map {
+private fun generateRandomInstrumentData(size: Int): List<Instrument> {
+    return (0 until size).map {
         Instrument(
-            quantity = Random.nextInt(20),
+            quantity = Random.nextInt(1, 20),
             price = Random.nextDouble(1.0,100000.0),
             currency = Currency.values().toList().shuffled().first(),
             sector = Sector.values().toList().shuffled().first(),
@@ -504,18 +494,56 @@ private fun createRandomTestCase(solver: Solver, part: Part): TestCase {
             region = Region.values().toList().shuffled().first()
         )
     }
-    val output = solver.calculateCoordinates(instruments)
-    return TestCase(Input(instruments, part), output, 4)
 }
 
-private fun randomTestCasesPart1(numberOfCases: Int): List<TestCase> {
-    return (0 until numberOfCases).map {
-        createRandomTestCase(PieChart(), Part.FIRST)
-    }
+fun createRandomTestCase(part: Part, minInstruments: Int = 1, maxInstruments: Int = 2000): TestCase {
+    val instrumentsNo = Random.nextInt(minInstruments,maxInstruments + 1)
+    val instruments = generateRandomInstrumentData(instrumentsNo)
+    val output = (if (part == Part.FIRST) PieChart() else ChordDiagram()).calculateCoordinates(instruments)
+    return TestCase(Input(instruments, part), output, part.score)
 }
 
-private fun randomTestCasesPart2(numberOfCases: Int): List<TestCase> {
-    return (0 until numberOfCases).map {
-        createRandomTestCase(ChordDiagram(), Part.SECOND)
-    }
+private fun getDoubleReBalancingParams(): Triple<Double, Double, Int> {
+    // numbers in hundredth percentage
+    val doubleReBalancingInstValue = Random.nextDouble(5.5, 8.0)
+    val initialOutlierValue = 5.0 / 100
+    val numberOfInitialOutliers = ceil(
+        1000 * ((doubleReBalancingInstValue * 2 - 10) / (doubleReBalancingInstValue - initialOutlierValue))
+    )
+    return Triple(doubleReBalancingInstValue, initialOutlierValue, numberOfInitialOutliers.toInt())
+}
+
+private fun generateRandomInstrumentWithGivenValue(value: Double): Instrument {
+    val quantity = Random.nextInt(1, 20)
+    return Instrument(
+        quantity,
+        price = value / quantity,
+        currency = Currency.values().toList().shuffled().first(),
+        sector = Sector.values().toList().shuffled().first(),
+        assetClass = AssetClass.values().toList().shuffled().first(),
+        region = Region.values().toList().shuffled().first()
+    )
+}
+
+private fun generateInstrumentsFor2StepReBalancingP1(minInitialInstruments: Int = 1): List<Instrument> {
+    val instrumentData = generateRandomInstrumentData(Random.nextInt(minInitialInstruments, 2000))
+    val threshold = instrumentData.sumOf { it.price * it.quantity } * 0.05 / 100
+    val instrumentsWithoutOutliers = instrumentData.filter { (it.quantity * it.price) >= threshold }
+
+    // numbers in hundredth percentage
+    val (doubleReBalancingInstValue, initialOutlierValue, numberOfInitialOutliers) = getDoubleReBalancingParams()
+    val percentageOfNonOutliers = 100.0 - (doubleReBalancingInstValue / 100.0) - (numberOfInitialOutliers * initialOutlierValue / 100.0)
+    val totalValue = instrumentsWithoutOutliers.sumOf { it.price * it.quantity } * 100.0 / percentageOfNonOutliers
+    val outliers = (0 until numberOfInitialOutliers)
+        .map { generateRandomInstrumentWithGivenValue(initialOutlierValue * totalValue / (100 * 100)) }
+
+    return (outliers +
+            instrumentsWithoutOutliers +
+            generateRandomInstrumentWithGivenValue(doubleReBalancingInstValue * totalValue / (100 * 100))).shuffled()
+}
+
+fun create2StepReBalancingRandomTCP1(minInitialInstruments: Int): TestCase {
+    val instruments = generateInstrumentsFor2StepReBalancingP1(minInitialInstruments)
+    val output = PieChart().calculateCoordinates(instruments)
+    return TestCase(Input(instruments, Part.FIRST), output, Part.FIRST.score)
 }

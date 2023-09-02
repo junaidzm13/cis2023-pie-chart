@@ -2,7 +2,7 @@ package com.csg.codeit.service
 
 import com.csg.codeit.config.objectMapper
 import com.csg.codeit.data.TestCasesProvider
-import com.csg.codeit.data.testCases
+import com.csg.codeit.data.hardCodedTestCasesPart1
 import com.csg.codeit.model.ChallengeResult
 import com.csg.codeit.model.TestCase
 import io.mockk.every
@@ -19,7 +19,7 @@ class EvaluatorServiceTest {
 
     companion object {
         private const val TEAM_URL = "team.url.com"
-        private val testCase = testCases[0]
+        private val testCase = hardCodedTestCasesPart1[0]
     }
 
 
