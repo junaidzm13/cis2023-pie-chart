@@ -4,6 +4,7 @@ import ChordDiagram
 import PieChart
 import com.csg.codeit.model.*
 import kotlin.math.ceil
+import kotlin.math.max
 import kotlin.random.Random
 
 val hardCodedTestCasesPart1 = listOf(
@@ -505,7 +506,7 @@ fun createRandomTestCase(part: Part, minInstruments: Int = 1, maxInstruments: In
 
 private fun getDoubleReBalancingParams(): Triple<Double, Double, Int> {
     // numbers in hundredth percentage
-    val doubleReBalancingInstValue = Random.nextDouble(5.5, 8.0)
+    val doubleReBalancingInstValue = Random.nextDouble(5.1, 8.0)
     val initialOutlierValue = 5.0 / 100
     val numberOfInitialOutliers = ceil(
         1000 * ((doubleReBalancingInstValue * 2 - 10) / (doubleReBalancingInstValue - initialOutlierValue))
@@ -525,21 +526,26 @@ private fun generateRandomInstrumentWithGivenValue(value: Double): Instrument {
     )
 }
 
-private fun generateInstrumentsFor2StepReBalancingP1(minInitialInstruments: Int = 1): List<Instrument> {
-    val instrumentData = generateRandomInstrumentData(Random.nextInt(minInitialInstruments, 2000))
-    val threshold = instrumentData.sumOf { it.price * it.quantity } * 0.05 / 100
-    val instrumentsWithoutOutliers = instrumentData.filter { (it.quantity * it.price) >= threshold }
-
+private fun generateInstrumentsFor2StepReBalancingP1(minInstruments: Int = 1): List<Instrument> {
     // numbers in hundredth percentage
-    val (doubleReBalancingInstValue, initialOutlierValue, numberOfInitialOutliers) = getDoubleReBalancingParams()
-    val percentageOfNonOutliers = 100.0 - (doubleReBalancingInstValue / 100.0) - (numberOfInitialOutliers * initialOutlierValue / 100.0)
-    val totalValue = instrumentsWithoutOutliers.sumOf { it.price * it.quantity } * 100.0 / percentageOfNonOutliers
-    val outliers = (0 until numberOfInitialOutliers)
+    val (doubleReBalancingInstValue, initialOutlierValue, minNumberOfInitialOutliers) = getDoubleReBalancingParams()
+
+    val numberOfRemainingInstruments = max(
+        Random.nextInt(minInstruments, 1900) - minNumberOfInitialOutliers - 1,
+        100
+    ) // at least 100 other randomly generated instruments
+    val remainingInstruments = generateRandomInstrumentData(numberOfRemainingInstruments)
+
+    val percentageValueOfRemaining = 100.0 - (doubleReBalancingInstValue / 100.0) - (minNumberOfInitialOutliers * initialOutlierValue / 100.0)
+    val totalValue = remainingInstruments.sumOf { it.price * it.quantity } * 100.0 / percentageValueOfRemaining
+    val requiredOutliers = (0 until minNumberOfInitialOutliers)
         .map { generateRandomInstrumentWithGivenValue(initialOutlierValue * totalValue / (100 * 100)) }
 
-    return (outliers +
-            instrumentsWithoutOutliers +
-            generateRandomInstrumentWithGivenValue(doubleReBalancingInstValue * totalValue / (100 * 100))).shuffled()
+    return (
+        requiredOutliers +
+        remainingInstruments +
+        generateRandomInstrumentWithGivenValue(doubleReBalancingInstValue * totalValue / (100 * 100))
+    ).shuffled()
 }
 
 fun create2StepReBalancingRandomTCP1(minInitialInstruments: Int): TestCase {
