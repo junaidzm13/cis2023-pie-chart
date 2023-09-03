@@ -202,7 +202,7 @@ then further divided into smaller arcs *(ordered by size, clockwise descending)*
 As before you have to calculate `N + 1` angles representing relative investment allocations for each instrument in the
 portfolio. In addition to that, given `c`, `s`, `a`, `r` integers representing different types of currencies, sectors, asset classes and regions respectively,
 you also need to calculate `c + 1`, `s + 1`, `a + 1`, `r + 1` angles making up the four main arcs representing each risk category.
-Where `1 <= N <= 500`, `1 <= c <= 8`, `1 <= s <= 9`, `1 <= a <= 6`, `1 <= r <= 5`.
+Where `1 <= N <= 666`, `1 <= c <= 8`, `1 <= s <= 9`, `1 <= a <= 6`, `1 <= r <= 5`.
 
 <hr style="height:0.0625em; background-color:#e1e4e8">
 
