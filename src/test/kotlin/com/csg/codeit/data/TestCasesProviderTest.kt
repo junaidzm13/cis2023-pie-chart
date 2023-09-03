@@ -8,20 +8,26 @@ import com.csg.codeit.service.ResultCheckerService
 import com.csg.codeit.solution.AngleCalculator.Companion.defaultMinShare
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 import kotlin.math.abs
 
 class TestCasesProviderTest {
     private val testCasesProvider = TestCasesProvider()
 
-    @Test
-    fun `getTestCases provides 10 test cases from each part`() {
+    @ParameterizedTest(name = "Simulation number: {0}")
+    @ValueSource(ints = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    fun `getTestCases provides 10 valid test cases for each part`() {
         val testCases = testCasesProvider.getTestCases()
         val testCasesByPart = testCases.groupBy { it.input.part }
 
         assertThat(testCasesByPart[Part.FIRST]?.size).isEqualTo(10)
         assertThat(testCasesByPart[Part.FIRST]?.sumOf { it.score }).isEqualTo(40)
+        assertThat(testCasesByPart[Part.FIRST]?.all { it.input.data.isNotEmpty() && it.input.data.size <= 2000 }).isTrue
+
         assertThat(testCasesByPart[Part.SECOND]?.size).isEqualTo(10)
         assertThat(testCasesByPart[Part.SECOND]?.sumOf { it.score }).isEqualTo(60)
+        assertThat(testCasesByPart[Part.SECOND]?.all { it.input.data.isNotEmpty() && it.input.data.size <= 666 }).isTrue
     }
 
     @Test

@@ -13,6 +13,6 @@ class TestCasesProvider {
         createRandomTestCase(Part.FIRST, 2000) +
         // PART 2 @TODO random case generation to be enhanced to support two-step re-balancing
         hardCodedTestCasesPart2 +
-        listOf(50, 100, 200, 300, 400, 500, 600, 666)
+        listOf(50, 100, 250, 500, 500, 600, 600, 666)
             .map { createRandomTestCase(Part.SECOND, it, 666) }
 }
