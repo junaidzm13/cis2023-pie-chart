@@ -26,10 +26,10 @@ internal class ResultCheckerServiceTest {
     @Test
     fun `when at least one of angles returned aren't within threshold then return score of 0`() {
         val result = resultCheckerService.check(
-            listOf(3.0, 5.005),
+            listOf(3.0, 5.0001),
             TestCase(
                 input = Input(data = listOf(), part = Part.FIRST),
-                output = OutputPart1(instruments = listOf(3.0, 5.01)),
+                output = OutputPart1(instruments = listOf(3.0, 5.000101)),
                 score=4
             )
         )
@@ -44,7 +44,7 @@ internal class ResultCheckerServiceTest {
             listOf(3.0, 5.0001),
             TestCase(
                 input = Input(data = listOf(), part = Part.FIRST),
-                output = OutputPart1(instruments = listOf(3.0, 5.000105)),
+                output = OutputPart1(instruments = listOf(3.0, 5.0001009)),
                 score=143
             )
         )

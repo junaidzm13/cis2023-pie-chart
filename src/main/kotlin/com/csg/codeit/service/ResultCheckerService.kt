@@ -9,7 +9,7 @@ import kotlin.math.abs
 @Service
 class ResultCheckerService {
     companion object {
-        private const val ERROR_THRESHOLD = 0.00001 // 10 ^ -5
+        private const val ERROR_THRESHOLD = 0.000001 // 10 ^ -6
         private val logger = LoggerFactory.getLogger(this::class.java)
     }
 
