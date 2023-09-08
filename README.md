@@ -41,6 +41,7 @@ then if we draw a pie chart sorted by the invested value of instruments we shoul
 Then the program should return the following list:
 
 ```
+// IMPORTANT: rounding is not required, should just be accurate to ~7 decimal points
 [
     0.0, // start of pie chart
     3.76991118, // boundary of slices of S3, S2
@@ -57,12 +58,12 @@ assigned the corresponding minimum value in radians and the angles of other slic
 
 <hr style="height:0.0625em; background-color:#e1e4e8">
 
-#### Example 1
+#### Example 1 (can also access */example*)
 
 **Input**
 ```json
 {
-  "instruments": [
+  "data": [
     {
       "quantity": 4,
       "price": 5.0,
@@ -110,7 +111,7 @@ assigned the corresponding minimum value in radians and the angles of other slic
 
 ```json
 {
-  "instruments": [
+  "data": [
     {
       "quantity": 110,
       "price": 10.0,
@@ -218,7 +219,7 @@ minimum value in radians and the angles of other arcs must be adjusted proportio
 **Input**
 ```json
 {
-  "instruments": [
+  "data": [
     {
       "quantity": 4,
       "price": 5.0,
@@ -289,7 +290,7 @@ minimum value in radians and the angles of other arcs must be adjusted proportio
 
 ```json
 {
-  "instruments": [
+  "data": [
     {
       "quantity": 110,
       "price": 10.0,

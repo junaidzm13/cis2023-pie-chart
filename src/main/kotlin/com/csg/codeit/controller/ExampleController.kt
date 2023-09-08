@@ -13,8 +13,12 @@ class ExampleController {
     @GetMapping("/example")
     fun getChallengeReqAndResExample() = ResponseEntity.ok(
         mapOf(
-            "${Part.FIRST} part" to RequestAndResponse(hardCodedTestCasesPart1[0].input, hardCodedTestCasesPart1[0].output),
-            "${Part.SECOND} part" to RequestAndResponse(hardCodedTestCasesPart2[0].input, hardCodedTestCasesPart2[0].output)
+            "Part I" to (0 until 2).map {
+                RequestAndResponse(hardCodedTestCasesPart1[it].input, hardCodedTestCasesPart1[it].output)
+            },
+            "Part II" to (0 until 2).map {
+                RequestAndResponse(hardCodedTestCasesPart2[it].input, hardCodedTestCasesPart2[it].output)
+            }
         )
     )
 
