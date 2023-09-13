@@ -6,8 +6,8 @@ data class Input(
 )
 
 enum class Part(val score: Int) {
-    FIRST(4),
-    SECOND(6);
+    FIRST(2),
+    SECOND(3);
 }
 
 data class Instrument(
