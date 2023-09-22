@@ -3,6 +3,7 @@ package com.csg.codeit.data
 import ChordDiagram
 import PieChart
 import com.csg.codeit.model.ChallengeResult
+import com.csg.codeit.model.OutputPart2
 import com.csg.codeit.model.Part
 import com.csg.codeit.service.ResultCheckerService
 import com.csg.codeit.solution.AngleCalculator.Companion.defaultMinShare
@@ -54,6 +55,24 @@ class TestCasesProviderTest {
         val initialOutliersCount = instrumentValues.count { it / totalValue < defaultMinShare }
 
         val resultingAngles = testCase.output.toListOfAngles()
+        val totalRebalancedAngles = (0 until resultingAngles.size - 1).reduce { acc: Int, index: Int ->
+            val angle = resultingAngles[index + 1] - resultingAngles[index]
+            acc + if (abs(angle - defaultMinShare * 2 * Math.PI) < 0.000000001) 1 else 0
+        }
+
+        assertThat(resultingAngles.size - 1).isEqualTo(instrumentValues.size)
+        assertThat(totalRebalancedAngles).isGreaterThan(initialOutliersCount)
+    }
+
+    @Test
+    fun `can create 2-step re-balancing test case for part 2`() {
+        val testCase = create2StepReBalancingRandomTCP2(10)
+
+        val instrumentValues = testCase.input.data.map { it.price * it.quantity }
+        val totalValue = instrumentValues.sum()
+        val initialOutliersCount = instrumentValues.count { it / totalValue < defaultMinShare }
+
+        val resultingAngles = (testCase.output as OutputPart2).instruments
         val totalRebalancedAngles = (0 until resultingAngles.size - 1).reduce { acc: Int, index: Int ->
             val angle = resultingAngles[index + 1] - resultingAngles[index]
             acc + if (abs(angle - defaultMinShare * 2 * Math.PI) < 0.000000001) 1 else 0
