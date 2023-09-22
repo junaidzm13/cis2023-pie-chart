@@ -23,7 +23,7 @@ You are given a portfolio made up of **N** instruments, each instrument having t
 
 <hr style="height:0.25em; background-color:#e1e4e8">
 
-### First visualization
+### First visualization (40%)
 
 For the first visualization, your friend would like you to build a pie chart to help visualize the amount invested in
 each instrument.
@@ -173,7 +173,7 @@ assigned the corresponding minimum value in radians and the angles of other slic
 
 <hr style="height:0.25em; background-color:#e1e4e8">
 
-### Second visualization
+### Second visualization (60%)
 
 For the second visualization, your friend's proposal is to build a split chord diagram to help visualize not only the
 relative amount invested in each instrument but also the risk exposures under each of the following categories:
