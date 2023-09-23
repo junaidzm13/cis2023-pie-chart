@@ -21,7 +21,7 @@ class ResultCheckerService {
         }
 
         val outsideOfThreshold = actual.filterIndexed { index, angle ->
-            !withinThreshold(angle, expected[index]).also {
+            (!withinThreshold(angle, expected[index])).also {
                 if (it) {
                     logger.error("[INCORRECT VALUES]. Expected: ${expected[index]}. Actual: $angle")
                 }
