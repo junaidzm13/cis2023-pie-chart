@@ -532,7 +532,7 @@ private fun generateRandomInstrumentWithGivenValue(value: Double): Instrument {
 }
 
 private fun remainingRandomInstruments(minInstruments: Int, maxInstruments: Int, minNumberOfInitialOutliers: Int): List<Instrument> {
-    val minNumOfRemainingInstruments = 100 // at least 100 other randomly generated instruments
+    val minNumOfRemainingInstruments = 25 // at least 25 other randomly generated instruments
     val actualNumOfRemainingInstruments = max(
         Random.nextInt(minInstruments, maxInstruments + 1 - minNumOfRemainingInstruments) - minNumberOfInitialOutliers - 1,
         minNumOfRemainingInstruments

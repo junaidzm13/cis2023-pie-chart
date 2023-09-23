@@ -13,7 +13,11 @@ import java.time.Duration.ofSeconds
 @ConfigurationProperties("app")
 data class AppConfig(val coordinatorAuthToken: String, val endpointSuffix: String) {
     @Bean
-    fun httpClient() = OkHttpClient.Builder().connectTimeout(ofSeconds(30)).callTimeout(ofSeconds(30)).build()
+    fun httpClient() = OkHttpClient
+        .Builder()
+        .connectTimeout(ofSeconds(10))
+        .callTimeout(ofSeconds(10))
+        .build()
 }
 
 val objectMapper: ObjectMapper = ObjectMapper().registerModule(
