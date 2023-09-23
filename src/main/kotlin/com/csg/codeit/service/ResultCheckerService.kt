@@ -20,17 +20,17 @@ class ResultCheckerService {
             return ChallengeResult(0, "Incorrect number of angles")
         }
 
-        val outsideOfThreshold = actual.filterIndexed { index, angle ->
-            !withinThreshold(angle, expected[index]).also {
-                if (it) {
-                    logger.error("[INCORRECT VALUES]. Expected: ${expected[index]}. Actual: $angle")
-                }
-            }
+        val outsideOfThreshold = actual.filterIndexed {
+            index, angle -> !withinThreshold(angle, expected[index])
         }
 
         return if (outsideOfThreshold.isEmpty()) {
+
             ChallengeResult(testCase.score, "${testCase.input.part} part: test case correct!")
         } else {
+            outsideOfThreshold.forEach {
+                logger.error("[INCORRECT VALUES]. Expected: $expected. Actual: $actual")
+            }
             ChallengeResult(0, "${testCase.input.part} part: Incorrect angle values")
         }
     }
