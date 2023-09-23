@@ -28,9 +28,7 @@ class ResultCheckerService {
 
             ChallengeResult(testCase.score, "${testCase.input.part} part: test case correct!")
         } else {
-            outsideOfThreshold.forEach {
-                logger.error("[INCORRECT VALUES]. Expected: $expected. Actual: $actual")
-            }
+            logger.error("[INCORRECT VALUES]. Expected: $expected. Actual: $actual")
             ChallengeResult(0, "${testCase.input.part} part: Incorrect angle values")
         }
     }
