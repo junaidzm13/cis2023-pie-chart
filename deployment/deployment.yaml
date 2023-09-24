@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pie-chart
+  namespace: pie-chart
+  labels:
+    name: pie-chart
+spec:
+  containers:
+    - name: pie-chart
+      image: pie-chart
+      imagePullPolicy: IfNotPresent
+      ports:
+        - containerPort: 8080
+          name: pie-chart-http
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pie-chart-service
+  namespace: pie-chart
+spec:
+#  type: NodePort
+  selector:
+    name: pie-chart
+  ports:
+    - name: name-of-service-port
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+
+---
+# ngrok Ingress Controller Configuration
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pie-chart-ingress
+  namespace: pie-chart
+spec:
+  ingressClassName: ngrok
+  rules:
+    - host: beloved-ostrich-rational.ngrok-free.app
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: pie-chart-service
+                port:
+                  number: 8080
