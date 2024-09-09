@@ -1,4 +1,6 @@
-# Pie chart (portfolio visualization)
+*This is one of the math-focused challenges I developed for my company's campus recruitment hackathon. Built using Kotlin and SpringBoot.*
+
+# Coordinate geometry (portfolio visualization)
 
 ### Endpoint
 
@@ -36,7 +38,7 @@ You should return a list containing `N + 1` angles where `1 <= N <= 2000`.
 For example, if Portfolio A is made up of 3 instruments S1, S2 and S3 with the following proportions 20%, 20% and 60% respectively,
 then if we draw a pie chart sorted by the invested value of instruments we should get:
 
-![Part1-visualization.png](./Part1-visualization.png)
+![Part1-visualization.png](./src/main/resources/static/Part1-visualization.png)
 
 Then the program should return the following list:
 
@@ -185,7 +187,7 @@ relative amount invested in each instrument but also the risk exposures under ea
 Your task again is to calculate angles (in radians).
 
 #### Split Chord Diagram (only for reference)
-![Part2-visualization.png](./Part2-visualization.png)
+![Part2-visualization.png](./src/main/resources/static/Part2-visualization.png)
 
 For the above diagram, only consider the outer skeleton (ignoring the connectors/ribbons). On the left-hand side,
 arks are ordered by size (ascending, clockwise) and each ark represents an instrument in the portfolio with the size of arc proportional to
@@ -376,3 +378,5 @@ minimum value in radians and the angles of other arcs must be adjusted proportio
 }
 ```
 <hr style="height:0.25em; background-color:#e1e4e8">
+
+*All rights reserved — © 2024, Junaid Malik*
